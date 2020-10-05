@@ -16,9 +16,7 @@ kscience {
 kotlin {
 
     jvm {
-        afterEvaluate {
-            withJava()
-        }
+        withJava()
     }
 
     js {

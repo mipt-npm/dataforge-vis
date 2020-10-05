@@ -1,4 +1,6 @@
-import ru.mipt.npm.gradle.*
+import ru.mipt.npm.gradle.DependencyConfiguration
+import ru.mipt.npm.gradle.FXModule
+import ru.mipt.npm.gradle.useFx
 
 plugins {
     id("ru.mipt.npm.mpp")
@@ -14,9 +16,7 @@ kscience {
 kotlin {
 
     jvm {
-        afterEvaluate {
-            withJava()
-        }
+        withJava()
     }
 
     sourceSets {

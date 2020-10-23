@@ -14,11 +14,8 @@ kscience {
 }
 
 kotlin {
-
     jvm {
-        afterEvaluate {
-            withJava()
-        }
+        withJava()
     }
     sourceSets {
         commonMain {

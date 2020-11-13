@@ -16,7 +16,7 @@ public open class VisionGroupBase : VisionBase(), MutableVisionGroup {
     //protected abstract val _children: MutableMap<NameToken, T>
 
     @SerialName("children")
-    protected val childrenInternal = LinkedHashMap<NameToken, Vision>()
+    private val childrenInternal = LinkedHashMap<NameToken, Vision>()
 
     /**
      * A map of top level named children

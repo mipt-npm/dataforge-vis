@@ -27,7 +27,9 @@ fun VisionLayout<Solid>.demo(name: String, title: String = name, block: SolidGro
 }
 
 val canvasOptions = Canvas3DOptions {
-    minSize = 400
+    size {
+        minSize = 400
+    }
     axes {
         size = 500.0
         visible = true
@@ -37,6 +39,7 @@ val canvasOptions = Canvas3DOptions {
         latitude = PI / 6
     }
 }
+
 
 fun VisionLayout<Solid>.showcase() {
     demo("shapes", "Basic shapes") {
@@ -55,9 +58,9 @@ fun VisionLayout<Solid>.showcase() {
             rotationX = PI / 4
             color("blue")
         }
-        sphereLayer(50,40){
-            theta = (PI/2).toFloat()
-            rotationX = - PI * 3 / 4
+        sphereLayer(50, 40) {
+            theta = (PI / 2).toFloat()
+            rotationX = -PI * 3 / 4
             z = 110
             color(Colors.pink)
         }

@@ -19,7 +19,7 @@ dependencies{
     api(project(":ui:react"))
 
     implementation(npm("@jetbrains/icons", "3.14.1"))
-    implementation(npm("@jetbrains/ring-ui", "4.0.7"))
+    implementation(npm("@jetbrains/ring-ui", "4.0.12"))
     implementation(npm("core-js","3.12.1"))
     implementation(npm("file-saver", "2.0.2"))
     compileOnly(npm("url-loader","4.1.1"))

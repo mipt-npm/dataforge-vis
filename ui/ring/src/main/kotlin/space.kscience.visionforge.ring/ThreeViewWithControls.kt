@@ -2,7 +2,6 @@ package space.kscience.visionforge.ring
 
 import kotlinx.css.*
 import react.*
-import ringui.grid.RowPosition
 import ringui.grid.ringCol
 import ringui.grid.ringGrid
 import ringui.grid.ringRow
@@ -48,9 +47,6 @@ public val ThreeCanvasWithControls: (props: ThreeCanvasWithControlsProps) -> dyn
             }
             ringGrid {
                 ringRow {
-                    attrs {
-                        start = RowPosition.sm
-                    }
                     ringCol {
                         attrs {
                             xs = 12

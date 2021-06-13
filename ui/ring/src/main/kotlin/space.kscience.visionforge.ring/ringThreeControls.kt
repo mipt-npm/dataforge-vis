@@ -1,7 +1,10 @@
 package space.kscience.visionforge.ring
 
-import kotlinx.css.*
+import kotlinx.css.BorderStyle
+import kotlinx.css.Color
+import kotlinx.css.padding
 import kotlinx.css.properties.border
+import kotlinx.css.px
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.events.Event
 import org.w3c.files.Blob
@@ -9,7 +12,6 @@ import org.w3c.files.BlobPropertyBag
 import react.*
 import react.dom.attrs
 import react.dom.button
-import react.dom.h2
 import ringui.island.ringIsland
 import ringui.tabs.ringSmartTabs
 import ringui.tabs.ringTab
@@ -21,11 +23,9 @@ import space.kscience.visionforge.VisionGroup
 import space.kscience.visionforge.encodeToString
 import space.kscience.visionforge.react.flexColumn
 import space.kscience.visionforge.react.flexRow
-import space.kscience.visionforge.react.objectTree
 import space.kscience.visionforge.react.propertyEditor
 import space.kscience.visionforge.solid.specifications.Canvas3DOptions
 import styled.css
-import styled.styledDiv
 
 internal fun saveData(event: Event, fileName: String, mimeType: String = "text/plain", dataBuilder: () -> String) {
     event.stopPropagation();
@@ -87,7 +87,7 @@ public external interface ThreeControlsProps : RProps {
     public var canvasOptions: Canvas3DOptions
     public var vision: Vision?
     public var selected: Name?
-    public var onSelect: (Name) -> Unit
+    public var onSelect: (Name?) -> Unit
 }
 
 @JsExport
@@ -98,37 +98,21 @@ public val ThreeControls: FunctionalComponent<ThreeControlsProps> = functionalCo
                 canvasControls(props.canvasOptions, props.vision)
             }
         }
-        ringTab("Tree") {
-            flexColumn {
-                css {
-                    border(1.px, BorderStyle.solid, Color.lightGray)
-                    padding(10.px)
-                    flexGrow = 1.0
-                    flexWrap = FlexWrap.wrap
-                }
-                h2 { +"Object tree" }
-                styledDiv {
-                    css {
-                        overflowY = Overflow.auto
-                        flexGrow = 1.0
-                    }
-                    props.vision?.let {
-                        objectTree(it, props.selected, props.onSelect)
-                    }
+        props.vision?.let {
+            ringTab("Tree") {
+                ringIsland("Vision tree") {
+                    ringVisionTree(it, props.selected, props.onSelect)
                 }
             }
         }
-        if (props.selected != null) {
+        props.selected?.let { selected ->
             ringTab("Properties") {
-                props.selected.let { selected ->
-                    val selectedObject: Vision? = when {
-                        selected == null -> null
-                        selected.isEmpty() -> props.vision
-                        else -> (props.vision as? VisionGroup)?.get(selected)
-                    }
-                    if (selectedObject != null) {
-                        ringPropertyEditor(selectedObject, key = selected)
-                    }
+                val selectedObject: Vision? = when {
+                    selected.isEmpty() -> props.vision
+                    else -> (props.vision as? VisionGroup)?.get(selected)
+                }
+                if (selectedObject != null) {
+                    ringPropertyEditor(selectedObject, key = selected)
                 }
             }
         }
@@ -140,7 +124,7 @@ public fun RBuilder.ringThreeControls(
     canvasOptions: Canvas3DOptions,
     vision: Vision?,
     selected: Name?,
-    onSelect: (Name) -> Unit = {},
+    onSelect: (Name?) -> Unit = {},
     builder: RBuilder.() -> Unit = {},
 ): ReactElement = child(ThreeControls) {
     attrs {
